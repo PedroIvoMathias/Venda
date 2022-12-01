@@ -1,26 +1,46 @@
 package br.com.vendas.Model;
 
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
-
+@Entity
 public class Cliente implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
+    
     private String Nome, CPF, Telefone;
-    //private Endereco Endereco;
+    @Embedded
+    private Endereco Endereco;
+    
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> Pedidos = new ArrayList<>();
+
+    
 
     public Cliente() {
     }
 
-    public Cliente(Long ID, String Nome, String CPF, String Telefone) {
+    public Cliente(Long ID, String Nome, String CPF, String Telefone, Endereco Endereco) {
         this.ID = ID;
         this.Nome = Nome;
         this.CPF = CPF;
         this.Telefone = Telefone;
+        this.Endereco = Endereco;
     }
+
+    
 
     public Long getID() {
         return ID;
@@ -53,6 +73,26 @@ public class Cliente implements Serializable{
     public void setTelefone(String Telefone) {
         this.Telefone = Telefone;
     }
+
+    public Endereco getEndereco() {
+        return Endereco;
+    }
+
+    public void setEndereco(Endereco Endereco) {
+        this.Endereco = Endereco;
+    }
+    
+    public List<Pedido> getPedidos() {
+        return Pedidos;
+    }
+    
+//    public void add( Pedido pedido){
+//        Pedidos.add(pedido);
+//    }
+//    public void remove (Pedido pedido){
+//        Pedidos.remove(pedido);
+//    }
+    
 
     @Override
     public int hashCode() {

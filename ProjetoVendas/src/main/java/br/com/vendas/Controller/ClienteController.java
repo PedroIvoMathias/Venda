@@ -1,8 +1,12 @@
 package br.com.vendas.Controller;
 
 import br.com.vendas.Model.Cliente;
+import br.com.vendas.Service.ClienteService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,9 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/clientes")
 public class ClienteController {
     
+    @Autowired
+    private ClienteService service;
+    
     @GetMapping
-    public ResponseEntity<Cliente> findAll(){
-        Cliente c = new Cliente(1L, "Jhon", "198.476.576-45", "(22)33322-9967");
-        return ResponseEntity.ok().body(c);
+    public ResponseEntity<List<Cliente>> findAll(){
+        List<Cliente> list = service.findAll();
+        return ResponseEntity.ok().body(list);
+    }
+    
+    @GetMapping(value ="/{id}")
+    public ResponseEntity<Cliente>findById(@PathVariable Long id){
+        Cliente obj = service.findById(id);
+        return ResponseEntity.ok().body(obj);
     }
 }
