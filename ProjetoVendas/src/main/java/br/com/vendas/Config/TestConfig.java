@@ -4,6 +4,7 @@ import br.com.vendas.Model.Cliente;
 import br.com.vendas.Model.Endereco;
 import br.com.vendas.Model.Pedido;
 import br.com.vendas.Repository.ClienteRepository;
+import br.com.vendas.Repository.PedidoRepository;
 import java.time.Instant;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ClienteRepository clienteRepo;
+    
+    @Autowired
+    private PedidoRepository pedidoRepo;
+    
     
 
     @Override
@@ -34,6 +39,8 @@ public class TestConfig implements CommandLineRunner {
         Pedido p3 = new Pedido(null, Instant.parse("2019-07-22T15:21:22Z"), c); 
         
         clienteRepo.saveAll(Arrays.asList(c,c2));
+        
+        pedidoRepo.saveAll(Arrays.asList(p1,p2,p3));
         
         
     }

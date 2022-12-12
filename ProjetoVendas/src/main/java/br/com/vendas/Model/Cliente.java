@@ -1,5 +1,6 @@
 package br.com.vendas.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ public class Cliente implements Serializable{
     @Embedded
     private Endereco Endereco;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> Pedidos = new ArrayList<>();
 
@@ -86,12 +88,12 @@ public class Cliente implements Serializable{
         return Pedidos;
     }
     
-//    public void add( Pedido pedido){
-//        Pedidos.add(pedido);
-//    }
-//    public void remove (Pedido pedido){
-//        Pedidos.remove(pedido);
-//    }
+    public void add( Pedido pedido){
+        Pedidos.add(pedido);
+    }
+    public void remove (Pedido pedido){
+        Pedidos.remove(pedido);
+    }
     
 
     @Override
