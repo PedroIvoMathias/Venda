@@ -1,5 +1,6 @@
 package br.com.vendas.Model;
 
+import br.com.vendas.Enum.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +20,8 @@ public class Pedido implements Serializable {
     private Long Id;
     private Instant moment;
     
+    private Integer orderStatus;
+    
     @JsonIgnore
     @ManyToOne
     private Cliente cliente;
@@ -26,9 +29,10 @@ public class Pedido implements Serializable {
     public Pedido() {
     }
 
-    public Pedido(Long Id, Instant moment, Cliente cliente) {
+    public Pedido(Long Id, Instant moment,OrderStatus OrderStatus, Cliente cliente) {
         this.Id = Id;
         this.moment = moment;
+        setOrderStatus(OrderStatus);
         this.cliente = cliente;
     }
 
@@ -48,6 +52,17 @@ public class Pedido implements Serializable {
         this.moment = moment;
     }
 
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if(orderStatus != null){
+            this.orderStatus = orderStatus.getCode();
+        }
+        
+    }
+    
     public Cliente getCliente() {
         return cliente;
     }
